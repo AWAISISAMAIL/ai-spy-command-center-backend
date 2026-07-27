@@ -8,6 +8,7 @@ venv/
 
 # Environment variables (sensitive)
 .env
+.env.example
 
 # SQLite databases (local only)
 *.db
