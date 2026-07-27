@@ -1,175 +1,148 @@
 # 🕵️ AI Spy Command Center
 
-### Intelligence Operations Platform – Mission Control API
+## Enterprise Intelligence Operations Platform
 
-AI Spy Command Center is a production-oriented backend platform designed to simulate real-world intelligence operations management. The system provides secure authentication, mission management, intelligence reporting, AI-powered report analysis, and real-time communication capabilities through a scalable FastAPI architecture.
+AI Spy Command Center is a production-style backend engineering project built with FastAPI that simulates a modern intelligence operations platform.
 
-Built as an advanced backend engineering project to demonstrate API design, authentication, security, microservice architecture concepts, WebSockets, AI integration, testing, and production deployment practices.
+The system enables secure agent authentication, mission management, intelligence report processing, AI-powered analysis, real-time notifications, and enterprise-grade API security practices.
 
----
-
-## 🚀 Project Overview
-
-The platform enables intelligence agencies to manage field agents, create and track covert missions, submit intelligence reports, and generate AI-powered summaries using contextual mission data.
-
-The project follows industry-standard backend development practices and is structured for future migration into independent microservices.
+This project was developed to demonstrate real-world backend engineering concepts including authentication, authorization, API architecture, security, testing, WebSockets, AI integration, and scalable system design.
 
 ---
 
-## ✨ Core Features
+## 🚀 Key Features
 
-### 🔐 Authentication & Authorization
+### 🔐 Authentication & Security
 
-* Secure user registration and login
-* JWT Access Tokens
-* JWT Refresh Tokens
-* Password hashing with bcrypt
-* Role-based access control (Agent / Admin)
-* Protected API endpoints
+- JWT Access Tokens
+- Refresh Token Rotation
+- Secure Password Hashing (bcrypt)
+- Role-Based Authorization
+- Protected Routes
+- Session Management
 
 ### 🎯 Mission Management
 
-* Create missions
-* Update mission details
-* Delete missions
-* Mission status tracking
-* Search and filtering
-* Pagination support
-* Sorting capabilities
+- Create Missions
+- Update Missions
+- Delete Missions
+- Mission Tracking
+- Search & Filtering
+- Pagination
+- Status Management
 
 ### 📡 Intelligence Reports
 
-* Field agents can submit reports
-* Report history management
-* Structured intelligence storage
-* Mission-linked reporting
+- Submit Field Intelligence
+- Store Reports
+- Retrieve Reports
+- Mission-linked Reporting
+- Structured Intelligence Management
 
-### 🧠 AI Intelligence Analysis
+### 🧠 AI Intelligence Engine
 
-* Context-aware report summarization
-* Dynamic prompt construction
-* Recent mission context injection
-* Multi-model LLM routing architecture
-* AI-ready service layer for future integrations
+- Context-Aware Summarization
+- Dynamic Prompt Construction
+- Mission Context Injection
+- Multi-Model AI Routing Architecture
+- AI-Ready Service Layer
 
-### ⚡ Real-Time Notifications
+### ⚡ Real-Time Operations
 
-* WebSocket-based communication
-* Live mission alerts
-* Instant event broadcasting
-* Real-time operational updates
+- WebSocket Notifications
+- Live Mission Alerts
+- Real-Time Updates
+- Event Broadcasting
 
-### 🛡️ API Security
+### 🛡️ Enterprise Security Layer
 
-* Security headers
-* CORS protection
-* Rate limiting
-* Request validation
-* GZip compression
-* Secure middleware pipeline
-
-### 📚 API Documentation
-
-* Auto-generated Swagger UI
-* Interactive endpoint testing
-* Request/response examples
-* Developer-friendly documentation
+- Security Headers
+- Rate Limiting
+- CORS Protection
+- Request Validation
+- Global Exception Handling
+- GZip Compression
 
 ### 🧪 Automated Testing
 
-* Authentication tests
-* Token refresh flow tests
-* API endpoint validation
-* FastAPI TestClient integration
+- Authentication Tests
+- Token Refresh Tests
+- API Validation
+- FastAPI TestClient Integration
+
+### 📚 API Documentation
+
+- Swagger UI
+- ReDoc Documentation
+- OpenAPI Specification
+- Interactive Endpoint Testing
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Architecture Overview
 
 ```text
-Client (Web App / Mobile App / Postman)
-                    │
-                    ▼
-            API Gateway Layer
-      (Security, CORS, Rate Limiting)
-                    │
-     ┌──────────────┼──────────────┐
-     ▼              ▼              ▼
- Auth Service   Mission Service   Intel Service
-     │              │              │
-     └──────────────┼──────────────┘
-                    ▼
-             AI Brain Service
-        (Prompt + Context Engine)
-                    │
-                    ▼
-               Database Layer
+Client Applications
+        │
+        ▼
+ API Gateway Layer
+(Security + Middleware)
+        │
+ ┌──────┼──────┐
+ ▼      ▼      ▼
+Auth  Mission Intel
+Svc    Svc    Svc
+        │
+        ▼
+  AI Brain Service
+        │
+        ▼
+   Database Layer
 ```
 
-All services are currently implemented within a single FastAPI application while maintaining logical service separation for future microservice migration.
+The project follows a modular architecture where services remain logically separated while operating inside a single FastAPI application.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
-| Category                | Technologies                  |
-| ----------------------- | ----------------------------- |
-| Backend                 | Python 3.11, FastAPI, Uvicorn |
-| Database                | SQLite, PostgreSQL            |
-| Authentication          | JWT, python-jose, bcrypt      |
-| ORM                     | SQLAlchemy                    |
-| Real-Time Communication | WebSockets                    |
-| Testing                 | Pytest, TestClient, HTTPX     |
-| API Documentation       | Swagger UI                    |
-| Deployment              | Render                        |
-| Version Control         | Git & GitHub                  |
-
----
-
-## 📂 Project Structure
-
-```text
-AI-SPY-COMMAND-CENTER
-│
-├── auth_service/
-│   ├── authentication
-│   ├── authorization
-│   └── token management
-│
-├── mission_service/
-│   ├── mission CRUD
-│   ├── mission filtering
-│   └── websocket alerts
-│
-├── intel_service/
-│   ├── intelligence reports
-│   └── report management
-│
-├── ai_brain_service/
-│   ├── prompt engineering
-│   ├── context injection
-│   └── llm routing
-│
-├── gateway/
-│   ├── cors
-│   ├── security
-│   └── rate limiting
-│
-├── shared/
-│   └── common utilities
-│
-├── tests/
-│   └── automated tests
-│
-├── main.py
-├── api_versions.py
-├── requirements.txt
-└── README.md
-```
+| Category | Technology |
+|-----------|------------|
+| Backend | FastAPI |
+| Language | Python 3.11 |
+| Database | SQLite / PostgreSQL |
+| ORM | SQLAlchemy |
+| Authentication | JWT + bcrypt |
+| Real-Time | WebSockets |
+| Testing | Pytest |
+| Documentation | Swagger |
+| Deployment | Render |
+| Version Control | Git & GitHub |
 
 ---
 
-## 🚀 Getting Started
+## 📂 Project Highlights
+
+This project demonstrates practical experience with:
+
+- REST API Design
+- Authentication Systems
+- Authorization Systems
+- Token-Based Security
+- Refresh Token Flow
+- API Security
+- WebSocket Communication
+- AI Integration Concepts
+- Prompt Engineering
+- Context Engineering
+- Database Design
+- Middleware Architecture
+- Backend Testing
+- Production Deployment Concepts
+
+---
+
+## 🚀 Local Setup
 
 ### Clone Repository
 
@@ -186,16 +159,8 @@ python -m venv venv
 
 ### Activate Environment
 
-#### Windows
-
 ```bash
 venv\Scripts\activate
-```
-
-#### Linux / macOS
-
-```bash
-source venv/bin/activate
 ```
 
 ### Install Dependencies
@@ -204,7 +169,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Start Development Server
+### Run Server
 
 ```bash
 uvicorn main:app --reload
@@ -214,15 +179,13 @@ uvicorn main:app --reload
 
 ## 📖 API Documentation
 
-After starting the server:
-
-### Swagger UI
+Swagger UI:
 
 ```text
 http://127.0.0.1:8000/docs
 ```
 
-### ReDoc
+ReDoc:
 
 ```text
 http://127.0.0.1:8000/redoc
@@ -238,73 +201,28 @@ pytest -v
 
 ---
 
-## 🌐 Deployment
+## 🔮 Future Roadmap
 
-### Backend
-
-Render Cloud Platform
-
-### Frontend
-
-Vercel (Planned)
-
-### Database
-
-PostgreSQL (Production Ready)
-
----
-
-## 🎯 Learning Objectives Demonstrated
-
-This project showcases practical implementation of:
-
-* REST API Design
-* FastAPI Development
-* JWT Authentication
-* Refresh Token Flow
-* Role-Based Authorization
-* SQLAlchemy ORM
-* Database Design
-* API Security
-* Rate Limiting
-* WebSockets
-* AI Integration Concepts
-* Prompt Engineering
-* Context Engineering
-* Testing with Pytest
-* Production Deployment
-* Backend Architecture Design
-
----
-
-## 🔮 Future Enhancements
-
-* Full PostgreSQL Production Deployment
-* Docker Containerization
-* CI/CD Pipeline
-* AI Agent Integration
-* Multi-Tenant Architecture
-* Admin Dashboard
-* Mission Analytics
-* Audit Logging
-* Email Notifications
-* Kubernetes Deployment
-
----
-
-## 📄 License
-
-MIT License
-
-This project is open-source and available for educational, portfolio, and development purposes.
+- AI Agent Integration
+- Docker Containerization
+- PostgreSQL Production Deployment
+- Multi-Tenant Support
+- Audit Logging
+- Email Notifications
+- CI/CD Pipeline
+- Kubernetes Deployment
+- Advanced Analytics Dashboard
 
 ---
 
 ## 👨‍💻 Author
-AWAIS ISMAIL
 
-Developed as part of an advanced backend engineering and AI engineering learning journey, focusing on building production-style systems using modern backend technologies and best practices.
+**Awais Ismail**
+
+Backend Engineering • AI Engineering • FastAPI • Python
+
+Developed as part of a professional backend engineering and AI engineering learning journey focused on building production-ready systems.
 
 ---
 
-⭐ If you found this project interesting, consider giving the repository a star.
+⭐ Star the repository if you found it useful.
