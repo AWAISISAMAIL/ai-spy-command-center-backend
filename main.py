@@ -1,5 +1,11 @@
+import os
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
+from dotenv import load_dotenv
+
+load_dotenv()
+
 from auth_service.database import engine as auth_engine, Base as AuthBase
 from mission_service.database import engine as mission_engine, Base as MissionBase
 from intel_service.database import engine as intel_engine, Base as IntelBase
@@ -16,17 +22,21 @@ from shared.utils import success_response, error_response
 from api_versions import v1_router, v2_router
 from gateway.websocket_manager import manager
 
-app = FastAPI(
-    title="AI Spy Command Center",
-    version="1.0.0",
-    description="Intelligence operations platform – Mission Control API"
-)
-
-@app.on_event("startup")
-def create_tables():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
     AuthBase.metadata.create_all(bind=auth_engine)
     MissionBase.metadata.create_all(bind=mission_engine)
     IntelBase.metadata.create_all(bind=intel_engine)
+    yield
+    # Shutdown (if needed)
+
+app = FastAPI(
+    title="AI Spy Command Center",
+    version="1.0.0",
+    description="Intelligence operations platform – Mission Control API",
+    lifespan=lifespan
+)
 
 setup_gateway(app)
 
@@ -59,13 +69,11 @@ async def test_protected(current_user=Depends(get_current_user)):
         message="Authenticated user info"
     )
 
-# WebSocket endpoint for real-time alerts
 @app.websocket("/ws/alerts")
 async def websocket_alerts(websocket: WebSocket):
     await manager.connect(websocket)
     try:
         while True:
-            # Keep connection alive, client can send pings
             data = await websocket.receive_text()
             if data == "ping":
                 await websocket.send_text("pong")
