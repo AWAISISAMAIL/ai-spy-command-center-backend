@@ -1,4 +1,5 @@
 import os
+import traceback
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Depends, HTTPException, Request, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
@@ -6,28 +7,37 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from auth_service.database import engine as auth_engine, Base as AuthBase
-from mission_service.database import engine as mission_engine, Base as MissionBase
-from intel_service.database import engine as intel_engine, Base as IntelBase
-from auth_service import models as auth_models
-from mission_service import models as mission_models
-from intel_service import models as intel_models
-from auth_service.routes import router as auth_router
-from mission_service.routes import router as mission_router
-from intel_service.routes import router as intel_router
-from ai_brain_service.routes import router as ai_brain_router
-from auth_service.auth import get_current_user
-from gateway.middleware import setup_gateway
-from shared.utils import success_response, error_response
-from api_versions import v1_router, v2_router
-from gateway.websocket_manager import manager
+# Global variable to capture startup error
+debug_error = None
+
+try:
+    from auth_service.database import engine as auth_engine, Base as AuthBase
+    from mission_service.database import engine as mission_engine, Base as MissionBase
+    from intel_service.database import engine as intel_engine, Base as IntelBase
+    from auth_service import models as auth_models
+    from mission_service import models as mission_models
+    from intel_service import models as intel_models
+    from auth_service.routes import router as auth_router
+    from mission_service.routes import router as mission_router
+    from intel_service.routes import router as intel_router
+    from ai_brain_service.routes import router as ai_brain_router
+    from auth_service.auth import get_current_user
+    from gateway.middleware import setup_gateway
+    from shared.utils import success_response, error_response
+    from api_versions import v1_router, v2_router
+    from gateway.websocket_manager import manager
+except Exception as e:
+    debug_error = f"Import Error: {str(e)}\n{traceback.format_exc()}"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
-    AuthBase.metadata.create_all(bind=auth_engine)
-    MissionBase.metadata.create_all(bind=mission_engine)
-    IntelBase.metadata.create_all(bind=intel_engine)
+    global debug_error
+    try:
+        AuthBase.metadata.create_all(bind=auth_engine)
+        MissionBase.metadata.create_all(bind=mission_engine)
+        IntelBase.metadata.create_all(bind=intel_engine)
+    except Exception as e:
+        debug_error = f"Startup Error: {str(e)}\n{traceback.format_exc()}"
     yield
 
 app = FastAPI(
@@ -68,7 +78,6 @@ async def test_protected(current_user=Depends(get_current_user)):
         message="Authenticated user info"
     )
 
-# Emergency endpoint to create tables if not created automatically
 @app.get("/init-db")
 async def init_database():
     try:
@@ -78,6 +87,10 @@ async def init_database():
         return {"message": "All tables created successfully"}
     except Exception as e:
         return {"error": str(e)}
+
+@app.get("/debug")
+async def debug():
+    return {"debug_error": debug_error or "No error captured"}
 
 @app.websocket("/ws/alerts")
 async def websocket_alerts(websocket: WebSocket):
