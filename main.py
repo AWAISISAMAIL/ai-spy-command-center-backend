@@ -29,7 +29,6 @@ async def lifespan(app: FastAPI):
     MissionBase.metadata.create_all(bind=mission_engine)
     IntelBase.metadata.create_all(bind=intel_engine)
     yield
-    # Shutdown (if needed)
 
 app = FastAPI(
     title="AI Spy Command Center",
@@ -68,6 +67,17 @@ async def test_protected(current_user=Depends(get_current_user)):
         data={"username": current_user.username, "role": current_user.role},
         message="Authenticated user info"
     )
+
+# Emergency endpoint to create tables if not created automatically
+@app.get("/init-db")
+async def init_database():
+    try:
+        AuthBase.metadata.create_all(bind=auth_engine)
+        MissionBase.metadata.create_all(bind=mission_engine)
+        IntelBase.metadata.create_all(bind=intel_engine)
+        return {"message": "All tables created successfully"}
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.websocket("/ws/alerts")
 async def websocket_alerts(websocket: WebSocket):
